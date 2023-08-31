@@ -1,10 +1,13 @@
 describe("POST /users", () => {
-  it("register a new user", () => {
-    const user = {
-      name: "Bruna Costa",
-      email: "bruna@yahoo.com",
-      password: "pwd123",
-    };
+
+  beforeEach(function () {
+    cy.fixture('users').then(function (users) {
+      this.users = users;
+    });
+  });
+
+  it("register a new user", function() {
+    const user = this.users.create
 
     cy.task("deleteUser", user.email);
 
@@ -13,12 +16,9 @@ describe("POST /users", () => {
     });
   });
 
-  it("duplicate email", () => {
-    const user = {
-      name: "James Gunn",
-      email: "james@hotmail.com",
-      password: "pwd123",
-    };
+  it("duplicate email", function() {
+
+    const user = this.users.dup_email
 
     cy.task("deleteUser", user.email);
 
@@ -32,57 +32,43 @@ describe("POST /users", () => {
     });
   });
 
-  context ("required fields", () => {
-    
+  context("required fields", function() {
     let user;
 
-    beforeEach(()=> {
-        user = {
-        name: "Margot Robbie",
-        email: "margot@gmail.com",
-        password: "FA12345do"
-        }
-    })
+    beforeEach(function() {
+      user = this.users.required
+    });
 
     it("name is required", () => {
+      delete user.name;
 
-      delete user.name
-
-      cy.postUser(user)
-      .then((response) => {
-
+      cy.postUser(user).then((response) => {
         const { message } = response.body;
-        
+
         expect(response.status).to.eq(400);
-        expect(message).to.eq("ValidationError: \"name\" is required")
+        expect(message).to.eq('ValidationError: "name" is required');
       });
     });
 
-    it("email is required", () => {
+    it("email is required", function() {
+      delete user.email;
 
-      delete user.email
-
-      cy.postUser(user)
-      .then((response) => {
-
+      cy.postUser(user).then((response) => {
         const { message } = response.body;
-        
+
         expect(response.status).to.eq(400);
-        expect(message).to.eq("ValidationError: \"email\" is required")
+        expect(message).to.eq('ValidationError: "email" is required');
       });
     });
 
-    it("password is required", () => {
+    it("password is required", function() {
+      delete user.password;
 
-      delete user.password
-
-      cy.postUser(user)
-      .then((response) => {
-
+      cy.postUser(user).then((response) => {
         const { message } = response.body;
-        
+
         expect(response.status).to.eq(400);
-        expect(message).to.eq("ValidationError: \"password\" is required")
+        expect(message).to.eq('ValidationError: "password" is required');
       });
     });
   });
