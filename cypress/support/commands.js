@@ -48,12 +48,53 @@ Cypress.Commands.add("postSession", (user) => {
 
 Cypress.Commands.add("postTask", (task, token) => {
   cy.api({
-    url: '/tasks',
-    method: 'POST',
+    url: "/tasks",
+    method: "POST",
     body: task,
     headers: {
-        authorization : token
+      authorization: token,
     },
-    failOnStatusCode: false
-}).then((response) => { return response });
-})
+    failOnStatusCode: false,
+  }).then((response) => {
+    return response;
+  });
+});
+
+Cypress.Commands.add("getUniqueTask", (taskId, token) => {
+  cy.api({
+    url: "/tasks/" + taskId,
+    method: "GET",
+    headers: {
+      authorization: token,
+    },
+    failOnStatusCode: false,
+  }).then((response) => {
+    return response;
+  });
+});
+
+Cypress.Commands.add("deleteTask", (taskId, token) => {
+  cy.api({
+    url: "/tasks/" + taskId,
+    method: "DELETE",
+    headers: {
+      authorization: token,
+    },
+    failOnStatusCode: false,
+  }).then((response) => {
+    return response;
+  });
+});
+
+Cypress.Commands.add("getTasks", (token) => {
+  cy.api({
+    url: "/tasks",
+    method: "GET",
+    headers: {
+      authorization: token,
+    },
+    failOnStatusCode: false,
+  }).then((response) => {
+    return response;
+  });
+});

@@ -9,7 +9,7 @@ describe("POST /users", () => {
   it("register a new user", function() {
     const user = this.users.create
 
-    cy.task("deleteUser", user.email);
+    cy.task("removeUser", user.email);
 
     cy.postUser(user).then((response) => {
       expect(response.status).to.eq(200);
@@ -20,7 +20,7 @@ describe("POST /users", () => {
 
     const user = this.users.dup_email
 
-    cy.task("deleteUser", user.email);
+    cy.task("removeUser", user.email);
 
     cy.postUser(user);
 
