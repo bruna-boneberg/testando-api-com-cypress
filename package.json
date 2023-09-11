@@ -16,10 +16,13 @@
   "author": "Bruna Costa",
   "license": "ISC",
   "devDependencies": {
+    "allure-commandline": "^2.24.0",
     "cypress": "^12.17.4",
-    "cypress-plugin-api": "^2.11.1"
+    "cypress-plugin-api": "^2.11.1",
+    "dotenv": "^16.3.1"
   },
   "dependencies": {
+    "@shelex/cypress-allure-plugin": "^2.40.0",
     "mongodb": "^5.7.0"
   }
 }

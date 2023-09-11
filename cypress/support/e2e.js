@@ -14,7 +14,10 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands/amqp'
+import './commands/services'
+
+require('@shelex/cypress-allure-plugin')
 
 import 'cypress-plugin-api'
 
